@@ -2,12 +2,18 @@ const express = require('express');
 const mongoose = require('mongoose');
 const config = require('./config');
 const cors = require('cors');
+
 const AuthRouter = require('./routers/auth-router');
+const NewsRouter = require('./routers/news-router');
 
 const app = express();
+// config
 app.use(cors());
 app.use(express.json());
-app.use(AuthRouter);
+
+// Routers
+app.use('/auth', AuthRouter);
+app.use('/news', NewsRouter);
 
 const start = async () => {
   try {

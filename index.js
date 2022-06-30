@@ -1,7 +1,34 @@
 const express = require('express');
+const mongoose = require('mongoose');
+const config = require('./config');
+const cors = require('cors');
+const AuthRouter = require('./routers/auth-router');
 
 const app = express();
+app.use(cors());
+app.use(express.json());
+app.use(AuthRouter);
 
-app.listen(3001, () => {
-  console.log('app started on port 3001');
-});
+const start = async () => {
+  try {
+    connectToDatabase();
+    app.listen(config.PORT, () => {
+      console.log(`app started on port ${config.PORT}`);
+    });
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const connectToDatabase = async () => {
+  try {
+    await mongoose.connect(config.DB_URL);
+    console.log('connected to database');
+  } catch (e) {
+    console.log('Error connecting to MongoDB');
+    console.log(e);
+    console.log('----------------------------');
+  }
+};
+
+start();

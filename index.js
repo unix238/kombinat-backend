@@ -5,6 +5,7 @@ const cors = require('cors');
 
 const AuthRouter = require('./routers/auth-router');
 const NewsRouter = require('./routers/news-router');
+const ItemRouter = require('./routers/item-router');
 
 const app = express();
 // config
@@ -14,6 +15,7 @@ app.use(express.json());
 // Routers
 app.use('/auth', AuthRouter);
 app.use('/news', NewsRouter);
+app.use('/items', ItemRouter);
 
 const start = async () => {
   try {

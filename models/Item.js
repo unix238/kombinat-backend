@@ -8,6 +8,7 @@ const itemSchema = new mongoose.Schema({
   seller: { type: String, required: true },
   characteristics: { type: [String], required: true },
   images: { type: [String], required: true },
+  tags: { type: [mongoose.Schema.Types.ObjectId], ref: 'Tag' },
 });
 
 module.exports = mongoose.model('Item', itemSchema);

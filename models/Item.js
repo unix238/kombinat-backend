@@ -9,6 +9,7 @@ const itemSchema = new mongoose.Schema({
   characteristics: { type: [String], required: true },
   images: { type: [String], required: true },
   tags: { type: [mongoose.Schema.Types.ObjectId], ref: 'Tag' },
+  categories: { type: [mongoose.Schema.Types.ObjectId], ref: 'Category' },
 });
 
 module.exports = mongoose.model('Item', itemSchema);

@@ -9,8 +9,9 @@ ItemRouter.get('/get', ItemController.getItems);
 ItemRouter.get('/get/:id', ItemController.getByID);
 ItemRouter.get('/tags', ItemController.getAllTags);
 ItemRouter.get('/tag/:id', ItemController.getTagByID);
-ItemRouter.get('/by-tag/:tag', ItemController.getItemsByTag);
 ItemRouter.get('/categories', ItemController.getAllCategories);
+ItemRouter.get('/get/tag/:id', ItemController.getItemsByTag);
+ItemRouter.get('/get/category/:id', ItemController.getItemsByCategory);
 
 ItemRouter.post(
   '/categories/add',

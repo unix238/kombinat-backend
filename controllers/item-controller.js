@@ -83,7 +83,7 @@ class ItemController {
 
   async getItemsByTag(req, res) {
     try {
-      const tag = req.params.tag;
+      const tag = req.params.id;
       const page = req.query.page;
       const limit = req.query.limit;
       const { items, totalItems } = await ItemService.getItemsByTag(
@@ -121,6 +121,27 @@ class ItemController {
       }
     } catch (e) {
       res.status(400).json(e);
+    }
+  }
+
+  async getItemsByCategory(req, res) {
+    try {
+      const category = req.params.category;
+      const page = req.query.page;
+      const limit = req.query.limit;
+      const { items, totalItems } = await ItemService.getItemsByCategory(
+        category,
+        page,
+        limit
+      );
+      if (items) {
+        res.setHeader('x-total-count', totalItems.length);
+        res.setHeader('Access-Control-Expose-Headers', 'x-total-count');
+        res.status(200).json(items);
+      }
+    } catch (e) {
+      console.log(e);
+      res.status(400).json({ error: 'get news error' });
     }
   }
 }

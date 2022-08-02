@@ -69,20 +69,6 @@ class ItemService {
     }
   }
 
-  async getItemsByTag(link, page = 1, limit = 12) {
-    try {
-      const tag = await Tag.find({ link: link });
-      const totalItems = await Item.find({ tags: tag });
-      const items = await Item.find({ tags: tag })
-        .skip((page - 1) * limit)
-        .limit(limit);
-      return { items, totalItems };
-    } catch (e) {
-      console.log(e);
-      throw e;
-    }
-  }
-
   async addCategory(category) {
     try {
       const newCategory = await Category.create(category);
@@ -98,6 +84,35 @@ class ItemService {
     try {
       const categories = await Category.find({});
       return categories;
+    } catch (e) {
+      console.log(e);
+      throw e;
+    }
+  }
+
+  async getItemsByTag(link, page = 1, limit = 12) {
+    try {
+      const tag = await Tag.findOne({ _id: link });
+      console.log(tag);
+      const totalItems = await Item.find({ tags: tag });
+      const items = await Item.find({ tags: tag })
+        .skip((page - 1) * limit)
+        .limit(limit);
+      console.log('items', items);
+      return { items, totalItems };
+    } catch (e) {
+      console.log(e);
+      throw e;
+    }
+  }
+
+  async getItemsByCategory(category, page = 1, limit = 12) {
+    try {
+      const totalItems = await Item.find({ category: category });
+      const items = await Item.find({ category: category })
+        .skip((page - 1) * limit)
+        .limit(limit);
+      return { items, totalItems };
     } catch (e) {
       console.log(e);
       throw e;

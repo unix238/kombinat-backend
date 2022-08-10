@@ -92,8 +92,7 @@ class ItemService {
 
   async getItemsByTag(link, page = 1, limit = 12) {
     try {
-      const tag = await Tag.findOne({ _id: link });
-      console.log(tag);
+      const tag = await Tag.find({ link: link });
       const totalItems = await Item.find({ tags: tag });
       const items = await Item.find({ tags: tag })
         .skip((page - 1) * limit)

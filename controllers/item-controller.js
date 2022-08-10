@@ -83,19 +83,7 @@ class ItemController {
 
   async getItemsByTag(req, res) {
     try {
-      const tag = req.params.id;
-      const page = req.query.page;
-      const limit = req.query.limit;
-      const { items, totalItems } = await ItemService.getItemsByTag(
-        tag,
-        page,
-        limit
-      );
-      if (items) {
-        res.setHeader('x-total-count', totalItems.length);
-        res.setHeader('Access-Control-Expose-Headers', 'x-total-count');
-        res.status(200).json(items);
-      }
+      console.log(req);
     } catch (e) {
       console.log(e);
       res.status(400).json({ error: 'get news error' });

@@ -12,16 +12,51 @@ const generateAccessToken = (id, role) => {
 };
 
 class authService {
+  async activate(req, res) {
+    try {
+      const { activationCode } = req.params;
+      const user = await User.findOne({ activationCode });
+      if (!user) {
+        return res.status(400).json({ message: 'User not found' });
+      }
+      user.isActivated = true;
+      await user.save();
+      return res.status(200).json({ message: 'User activated' });
+    } catch (e) {
+      console.log(e);
+      res.status(400).json({ error: 'activate error' });
+    }
+  }
+
   async reg(req, res) {
     try {
       const { name, username, password, email, phone } = req.body;
       const userCondidate = await User.findOne({ username });
       if (userCondidate) {
-        res.status(400).json({ message: 'Username already exists' });
+        if (userCondidate.isActivated) {
+          res.status(400).json({ message: 'Username already exists' });
+          return;
+        }
+        res.status(403).json({ message: 'activate your account' });
+        return;
       }
       const emailCondidate = await User.findOne({ email });
       if (emailCondidate) {
-        res.status(400).json({ message: 'Email already exists' });
+        if (emailCondidate.isActivated) {
+          res.status(400).json({ message: 'Username already exists' });
+          return;
+        }
+        res.status(403).json({ message: 'activate your account' });
+        return;
+      }
+      const phoneCondidate = await User.findOne({ phone });
+      if (phoneCondidate) {
+        if (phoneCondidate.isActivated) {
+          res.status(400).json({ message: 'Username already exists' });
+          return;
+        }
+        res.status(403).json({ message: 'activate your account' });
+        return;
       }
 
       const hashPassword = await bcrypt.hash(password, 7);

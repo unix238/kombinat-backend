@@ -4,6 +4,9 @@ class AuthController {
   async register(req, res) {
     await authService.reg(req, res);
   }
+  async activate(req, res) {
+    await authService.activate(req, res);
+  }
   async login(req, res) {
     return await authService.login(req, res);
   }

@@ -34,6 +34,14 @@ class AuthController {
       res.status(400).json({ error: 'check token error' });
     }
   }
+  async sendCode(req, res) {
+    try {
+      await authService.sendCode(req, res);
+    } catch (e) {
+      console.log(e);
+      res.status(400).json({ error: 'send code error' });
+    }
+  }
 }
 
 module.exports = new AuthController();

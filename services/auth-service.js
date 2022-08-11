@@ -2,6 +2,7 @@ const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jsonwebtoken = require('jsonwebtoken');
 const { SECRET } = require('../config');
+const EmailSender = require('../utils/sendEmail');
 
 const generateAccessToken = (id, role) => {
   const payload = {
@@ -25,6 +26,25 @@ class authService {
     } catch (e) {
       console.log(e);
       res.status(400).json({ error: 'activate error' });
+    }
+  }
+
+  async sendCode(req, res) {
+    try {
+      const { email } = req.body;
+      const user = await User.findOne({ email });
+      if (!user) {
+        return res.status(400).json({ message: 'User not found' });
+      }
+      const code = user.activationCode;
+      EmailSender.sendEmail(
+        'bekzot.abdyldayev@gmail.com',
+        'Activation Code',
+        code
+      );
+    } catch (e) {
+      console.log(e);
+      res.status(400).json({ error: 'send code error' });
     }
   }
 

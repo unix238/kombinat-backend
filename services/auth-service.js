@@ -29,11 +29,7 @@ class authService {
         return res.status(400).json({ message: 'User not found' });
       }
       const code = user.activationCode;
-      EmailSender.sendEmail(
-        'bekzot.abdyldayev@gmail.com',
-        'Activation Code',
-        code
-      );
+      EmailSender.sendEmail(email, 'Activation Code', code);
       return res.status(200).json({ message: 'Code sent' });
     } catch (e) {
       console.log(e);
@@ -91,14 +87,16 @@ class authService {
       const { password, email } = req.body;
       const user = await User.findOne({ email });
       if (user) {
-        if (user.isActivated) {
-          return res.status(403).json({ message: 'Account already activated' });
+        if (!user.isActivated) {
+          return res.status(403).json({ message: 'Account is not activated' });
         }
       }
       const hashPassword = await bcrypt.hash(password, 7);
       user.password = hashPassword;
       await user.save();
-      return res.json({ message: 'User password saved' });
+      return res
+        .status(200)
+        .json({ message: 'User password saved', hash: hashPassword });
     } catch (e) {
       console.log(e);
       res.status(400).json({ error: 'adding password error' });
@@ -107,8 +105,10 @@ class authService {
 
   async login(req, res) {
     try {
-      const { username, password } = req.body;
-      const user = await User.findOne({ username });
+      const { email, password } = req.body;
+      const user =
+        (await User.findOne({ phone: email })) ||
+        (await User.findOne({ email }));
       if (!user) {
         return res.status(400).json({ message: 'User not found' });
       }

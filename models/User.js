@@ -27,6 +27,7 @@ const userSchema = new mongoose.Schema({
   phone: { type: String, required: true, unique: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: false },
+  newsRecipient: { type: Boolean, default: false },
   role: { type: String, required: true },
   createdAt: { type: Date, default: Date.now },
   isActivated: { type: Boolean, default: false },

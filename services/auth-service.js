@@ -4,6 +4,14 @@ const jsonwebtoken = require('jsonwebtoken');
 const { SECRET } = require('../config');
 const EmailSender = require('../utils/sendEmail');
 
+const MailMessage = (code) => {
+  return (
+    "<html><head></head><body><h1 style='color: red'>" +
+    code +
+    '</h1></body></html>'
+  );
+};
+
 const generateAccessToken = (id, role) => {
   const payload = {
     id,
@@ -13,22 +21,6 @@ const generateAccessToken = (id, role) => {
 };
 
 class authService {
-  async activate(req, res) {
-    try {
-      const { activationCode } = req.params;
-      const user = await User.findOne({ activationCode });
-      if (!user) {
-        return res.status(400).json({ message: 'User not found' });
-      }
-      user.isActivated = true;
-      await user.save();
-      return res.status(200).json({ message: 'User activated' });
-    } catch (e) {
-      console.log(e);
-      res.status(400).json({ error: 'activate error' });
-    }
-  }
-
   async sendCode(req, res) {
     try {
       const { email } = req.body;
@@ -42,57 +34,74 @@ class authService {
         'Activation Code',
         code
       );
+      return res.status(200).json({ message: 'Code sent' });
     } catch (e) {
       console.log(e);
       res.status(400).json({ error: 'send code error' });
     }
   }
 
-  async reg(req, res) {
+  async register(req, res) {
     try {
-      const { name, username, password, email, phone } = req.body;
-      const userCondidate = await User.findOne({ username });
-      if (userCondidate) {
-        if (userCondidate.isActivated) {
-          res.status(400).json({ message: 'Username already exists' });
-          return;
-        }
-        res.status(403).json({ message: 'activate your account' });
-        return;
-      }
-      const emailCondidate = await User.findOne({ email });
-      if (emailCondidate) {
+      const data = req.body;
+      const emailCondidate = await User.findOne({ email: data.email });
+      const phoneCondidate = await User.findOne({ phone: data.phone });
+      if (emailCondidate || phoneCondidate) {
         if (emailCondidate.isActivated) {
-          res.status(400).json({ message: 'Username already exists' });
-          return;
+          return res.status(403).json({ message: 'Account already exists' });
+        } else {
+          return res.status(205).json({ message: 'activate your account' });
         }
-        res.status(403).json({ message: 'activate your account' });
-        return;
       }
-      const phoneCondidate = await User.findOne({ phone });
-      if (phoneCondidate) {
-        if (phoneCondidate.isActivated) {
-          res.status(400).json({ message: 'Username already exists' });
-          return;
-        }
-        res.status(403).json({ message: 'activate your account' });
-        return;
-      }
-
-      const hashPassword = await bcrypt.hash(password, 7);
       const user = new User({
-        name,
-        phone,
-        email,
-        password: hashPassword,
-        username,
+        name: data.name,
+        phone: data.phone,
+        email: data.email,
         role: 'USER',
       });
       await user.save();
-      return res.json({ message: 'User created' });
+      return res.status(200).json({ message: user });
     } catch (e) {
       console.log(e);
-      res.status(400).json({ error: 'registration error' });
+      res.status(400).json({ error: 'register error' });
+    }
+  }
+
+  async checkActivationCode(req, res) {
+    try {
+      const { activationCode, email } = req.body;
+      const user = await User.findOne({ email });
+      console.log(user);
+      if (!user) {
+        return res.status(400).json({ message: 'User not found' });
+      }
+      if (user.activationCode == activationCode) {
+        user.isActivated = true;
+        await user.save();
+        return res.status(200).json({ message: 'Code is correct' });
+      }
+    } catch (e) {
+      console.log(e);
+      return res.status(400).json({ error: 'check activation code error' });
+    }
+  }
+
+  async continueRegister(req, res) {
+    try {
+      const { password, email } = req.body;
+      const user = await User.findOne({ email });
+      if (user) {
+        if (user.isActivated) {
+          return res.status(403).json({ message: 'Account already activated' });
+        }
+      }
+      const hashPassword = await bcrypt.hash(password, 7);
+      user.password = hashPassword;
+      await user.save();
+      return res.json({ message: 'User password saved' });
+    } catch (e) {
+      console.log(e);
+      res.status(400).json({ error: 'adding password error' });
     }
   }
 

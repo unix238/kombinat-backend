@@ -2,11 +2,20 @@ const authService = require('../services/auth-service');
 
 class AuthController {
   async register(req, res) {
-    await authService.reg(req, res);
+    await authService.register(req, res);
   }
-  async activate(req, res) {
-    await authService.activate(req, res);
+  async continueRegistration(req, res) {
+    await authService.continueRegister(req, res);
   }
+  async checkActivationCode(req, res) {
+    try {
+      await authService.checkActivationCode(req, res);
+    } catch (e) {
+      console.log(e);
+      res.status(400).json({ error: 'check activation code error' });
+    }
+  }
+
   async login(req, res) {
     return await authService.login(req, res);
   }

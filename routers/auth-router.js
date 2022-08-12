@@ -6,9 +6,9 @@ const adminMiddleware = require('../middleware/adminMiddleware');
 const AuthRouter = Router();
 
 AuthRouter.post('/register', authController.register);
-AuthRouter.post('/code', authController.sendCode);
-// AuthRouter.post('/activate/:activationCode', authController.activate);
-AuthRouter.post('/activate', authController.activate);
+AuthRouter.post('/send-code', authController.sendCode);
+AuthRouter.post('/continue-registration', authController.continueRegistration);
+AuthRouter.post('/check-activation-code', authController.checkActivationCode);
 AuthRouter.post('/login', authController.login);
 AuthRouter.post('/token-verify', [authMiddleware], authController.checkToken);
 AuthRouter.get('/user', [authMiddleware], authController.getUser);

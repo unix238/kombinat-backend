@@ -11,7 +11,7 @@ class EmailSender {
     });
 
     let mailDetails = {
-      from: 'testsendingactivationcode@gmail.com',
+      from: 'kmbnnt@gmail.com',
       to: to,
       subject: subject,
       text: text,

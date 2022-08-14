@@ -46,7 +46,7 @@ class authService {
         if (emailCondidate.isActivated) {
           return res.status(403).json({ message: 'Account already exists' });
         } else {
-          return res.status(205).json({ message: 'activate your account' });
+          return res.status(205).json({ message: 'Activate your account' });
         }
       }
       const user = new User({
@@ -63,7 +63,7 @@ class authService {
     }
   }
 
-  async checkActivationCode(req, res) {
+  async checkActivationCode(req, res, name) {
     try {
       const { activationCode, email } = req.body;
       const user = await User.findOne({ email });

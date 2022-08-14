@@ -63,7 +63,7 @@ class authService {
     }
   }
 
-  async checkActivationCode(req, res, name) {
+  async checkActivationCode(req, res) {
     try {
       const { activationCode, email } = req.body;
       const user = await User.findOne({ email });

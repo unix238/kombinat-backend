@@ -105,8 +105,10 @@ class authService {
 
   async login(req, res) {
     try {
-      const { email, password } = req.body;
-      const user = await User.findOne({ email });
+      const { userLogin, password } = req.body;
+      const user =
+        (await User.findOne({ email: userLogin })) ||
+        (await User.findOne({ phone: userLogin }));
       console.log(user);
       if (!user) {
         return res.status(400).json({ message: 'User not found' });
@@ -117,7 +119,7 @@ class authService {
       }
       const token = generateAccessToken(user._id, user.role);
 
-      res.status(200).json({ token, user });
+      res.status(200).json({ token, user: user._id });
     } catch (e) {
       console.log(e);
       res.status(400).json({ error: 'Login error' });

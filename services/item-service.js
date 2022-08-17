@@ -1,5 +1,6 @@
 const Item = require('../models/Item');
 const Tag = require('../models/Tag');
+const Brand = require('../models/Brand');
 const Category = require('../models/Category');
 
 class ItemService {
@@ -112,6 +113,16 @@ class ItemService {
         .skip((page - 1) * limit)
         .limit(limit);
       return { items, totalItems };
+    } catch (e) {
+      console.log(e);
+      throw e;
+    }
+  }
+
+  async getBrands() {
+    try {
+      const brands = await Brand.find();
+      return brands;
     } catch (e) {
       console.log(e);
       throw e;

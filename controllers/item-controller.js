@@ -132,6 +132,17 @@ class ItemController {
       res.status(400).json({ error: 'get news error' });
     }
   }
+
+  async getBrands(req, res) {
+    try {
+      const brands = await ItemService.getBrands();
+      if (brands) {
+        res.status(200).json(brands);
+      }
+    } catch (e) {
+      res.status(400).json(e);
+    }
+  }
 }
 
 module.exports = new ItemController();

@@ -132,38 +132,49 @@ class ItemService {
   async getFilteredItems(filters, page = 1, limit = 12) {
     try {
       const { tags, category, brand } = filters;
-      let allItems = [];
+      let itemsByTags = [];
+      let itemsByCategories = [];
+      let itemsByBrand = [];
       if (tags.length > 0) {
         for (let i = 0; i < tags.length; i++) {
           const items = await Item.find({ tags: tags[i] });
-          allItems = allItems.concat(items);
+          itemsByTags = itemsByTags.concat(items);
+        }
+      }
+
+      if (category.length > 0) {
+        for (let i = 0; i < category.length; i++) {
+          console.log('category', category[i]);
+          const items = await Item.find({ categories: category[i] });
+          itemsByCategories = itemsByCategories.concat(items);
         }
       }
 
       if (brand.length > 0) {
         for (let i = 0; i < brand.length; i++) {
           const items = await Item.find({ brand: brand[i] });
-          allItems = allItems.concat(items);
+          itemsByBrand = itemsByBrand.concat(items);
         }
       }
 
-      if (category.length > 0) {
-        console.log('added by category');
-        for (let i = 0; i < category.length; i++) {
-          const items = await Item.find({ categories: category[i] });
-          allItems = allItems.concat(items);
+      const items = itemsByTags.map((item) => item);
+
+      for (let i = 0; i < itemsByCategories.length; i++) {
+        if (!items.includes(itemsByCategories[i])) {
+          items.push(itemsByCategories[i]);
         }
       }
 
-      const fillted = [];
-      for (let i = 0; i < allItems.length; i++) {
-        if (!fillted.includes(allItems[i]._id)) {
-          fillted.push(allItems[i]);
+      for (let i = 0; i < itemsByBrand.length; i++) {
+        if (!items.includes(itemsByBrand[i])) {
+          items.push(itemsByBrand[i]);
         }
       }
 
-      console.log('filteredItems123123', fillted.length);
-      return { items: fillted, totalItems: fillted.length };
+      const totalItems = items;
+      const responseItems = items.slice((page - 1) * limit, page * limit);
+
+      return { items: responseItems, totalItems: totalItems };
     } catch (e) {
       console.log(e);
       throw e;

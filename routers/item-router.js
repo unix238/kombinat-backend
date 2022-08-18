@@ -31,4 +31,6 @@ ItemRouter.post(
   ItemController.addTag
 );
 
+ItemRouter.post('/get/filters', ItemController.getFilteredItems);
+
 module.exports = ItemRouter;

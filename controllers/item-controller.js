@@ -143,6 +143,26 @@ class ItemController {
       res.status(400).json(e);
     }
   }
+
+  async getFilteredItems(req, res) {
+    try {
+      const { page, limit } = req.query;
+      const filters = req.body;
+      const { items, totalItems } = await ItemService.getFilteredItems(
+        filters,
+        page,
+        limit
+      );
+      if (items) {
+        res.setHeader('x-total-count', items.length);
+        res.setHeader('Access-Control-Expose-Headers', 'x-total-count');
+        res.status(200).json(items);
+      }
+    } catch (e) {
+      console.log(e);
+      res.status(400).json({ error: 'get news error' });
+    }
+  }
 }
 
 module.exports = new ItemController();

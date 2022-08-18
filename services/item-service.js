@@ -128,6 +128,47 @@ class ItemService {
       throw e;
     }
   }
+
+  async getFilteredItems(filters, page = 1, limit = 12) {
+    try {
+      const { tags, category, brand } = filters;
+      let allItems = [];
+      if (tags.length > 0) {
+        for (let i = 0; i < tags.length; i++) {
+          const items = await Item.find({ tags: tags[i] });
+          allItems = allItems.concat(items);
+        }
+      }
+
+      if (brand.length > 0) {
+        for (let i = 0; i < brand.length; i++) {
+          const items = await Item.find({ brand: brand[i] });
+          allItems = allItems.concat(items);
+        }
+      }
+
+      if (category.length > 0) {
+        console.log('added by category');
+        for (let i = 0; i < category.length; i++) {
+          const items = await Item.find({ categories: category[i] });
+          allItems = allItems.concat(items);
+        }
+      }
+
+      const fillted = [];
+      for (let i = 0; i < allItems.length; i++) {
+        if (!fillted.includes(allItems[i]._id)) {
+          fillted.push(allItems[i]);
+        }
+      }
+
+      console.log('filteredItems123123', fillted.length);
+      return { items: fillted, totalItems: fillted.length };
+    } catch (e) {
+      console.log(e);
+      throw e;
+    }
+  }
 }
 
 module.exports = new ItemService();

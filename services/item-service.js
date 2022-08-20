@@ -132,49 +132,46 @@ class ItemService {
   async getFilteredItems(filters, page = 1, limit = 12) {
     try {
       const { tags, category, brand } = filters;
-      let itemsByTags = [];
-      let itemsByCategories = [];
-      let itemsByBrand = [];
-      if (tags.length > 0) {
-        for (let i = 0; i < tags.length; i++) {
-          const items = await Item.find({ tags: tags[i] });
-          itemsByTags = itemsByTags.concat(items);
-        }
+
+      // agreegation of filters
+      const filter = {};
+      if (tags) {
+        filter.tags = tags;
+      }
+      if (category) {
+        filter.categories = category;
+      }
+      if (brand) {
+        filter.brand = brand;
       }
 
-      if (category.length > 0) {
-        for (let i = 0; i < category.length; i++) {
-          console.log('category', category[i]);
-          const items = await Item.find({ categories: category[i] });
-          itemsByCategories = itemsByCategories.concat(items);
-        }
-      }
+      console.log(filter);
 
-      if (brand.length > 0) {
-        for (let i = 0; i < brand.length; i++) {
-          const items = await Item.find({ brand: brand[i] });
-          itemsByBrand = itemsByBrand.concat(items);
-        }
-      }
-
-      const items = itemsByTags.map((item) => item);
-
-      for (let i = 0; i < itemsByCategories.length; i++) {
-        if (!items.includes(itemsByCategories[i])) {
-          items.push(itemsByCategories[i]);
-        }
-      }
-
-      for (let i = 0; i < itemsByBrand.length; i++) {
-        if (!items.includes(itemsByBrand[i])) {
-          items.push(itemsByBrand[i]);
-        }
-      }
-
-      const totalItems = items;
-      const responseItems = items.slice((page - 1) * limit, page * limit);
-
-      return { items: responseItems, totalItems: totalItems };
+      const totalItems = await Item.find({
+        $or: [
+          {
+            $or: [
+              { tags: { $in: tags } },
+              { categories: { $in: category } },
+              { brand: { $in: brand } },
+            ],
+          },
+        ],
+      });
+      const items = await Item.find({
+        $or: [
+          {
+            $or: [
+              { tags: { $in: tags } },
+              { categories: { $in: category } },
+              { brand: { $in: brand } },
+            ],
+          },
+        ],
+      })
+        .skip((page - 1) * limit)
+        .limit(limit);
+      return { items, totalItems };
     } catch (e) {
       console.log(e);
       throw e;

@@ -98,7 +98,6 @@ class ItemService {
       const items = await Item.find({ tags: tag })
         .skip((page - 1) * limit)
         .limit(limit);
-      console.log('items', items);
       return { items, totalItems };
     } catch (e) {
       console.log(e);
@@ -131,22 +130,40 @@ class ItemService {
 
   async getFilteredItems(filters, page = 1, limit = 12) {
     try {
-      const { tags, category, brand } = filters;
-
-      // agreegation of filters
+      const { tags, category, brand, sort } = filters;
+      console.log(filters);
       const filter = {};
-      if (tags) {
+      if (tags.length > 0) {
         filter.tags = tags;
       }
-      if (category) {
+      if (category.length > 0) {
         filter.categories = category;
       }
-      if (brand) {
+      if (brand.length > 0) {
         filter.brand = brand;
       }
 
-      console.log(filter);
+      if (Object.keys(filter).length === 0) {
+        console.log('dad');
+        const totalItems = await Item.find({});
+        const items = await Item.find({})
+          .skip((page - 1) * limit)
+          .limit(limit);
 
+        if (sort.length > 0) {
+          const sortedItems = items.sort((a, b) => {
+            if (sort === 'asc') {
+              return a.price - b.price;
+            } else if (sort === 'desc') {
+              return b.price - a.price;
+            } else if (sort === 'date') {
+              return a.createdAt - b.createdAt;
+            }
+          });
+          return { items: sortedItems, totalItems };
+        }
+        return { items, totalItems };
+      }
       const totalItems = await Item.find({
         $or: [
           {
@@ -171,6 +188,19 @@ class ItemService {
       })
         .skip((page - 1) * limit)
         .limit(limit);
+
+      if (sort.length > 0) {
+        // console.log(items, 'sort');
+        const sortedItems = items.sort((a, b) => {
+          if (sort === 'asc') {
+            return a.price - b.price;
+          } else if (sort === 'desc') {
+            return b.price - a.price;
+          }
+        });
+        console.log(sortedItems);
+        return { items: sortedItems, totalItems };
+      }
       return { items, totalItems };
     } catch (e) {
       console.log(e);

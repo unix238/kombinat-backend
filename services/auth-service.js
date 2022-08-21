@@ -44,7 +44,7 @@ class authService {
       const phoneCondidate = await User.findOne({ phone: data.phone });
       if (emailCondidate || phoneCondidate) {
         if (emailCondidate.isActivated) {
-          return res.status(403).json({ message: 'Account already exists' });
+          return res.status(400).json({ message: 'Account already exists' });
         } else {
           return res.status(205).json({ message: 'Activate your account' });
         }

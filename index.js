@@ -7,7 +7,10 @@ const AuthRouter = require('./routers/auth-router');
 const NewsRouter = require('./routers/news-router');
 const ItemRouter = require('./routers/item-router');
 const PaymentRouter = require('./routers/payment-router');
+
+// CMS Routers
 const CMSAuthRouter = require('./routers/cms/auth-router');
+const CMSOrdersRouter = require('./routers/cms/orders-router');
 
 const app = express();
 // config
@@ -22,6 +25,7 @@ app.use('/payments', PaymentRouter);
 
 //CMS Routers
 app.use('/cms/auth', CMSAuthRouter);
+app.use('/cms/orders', CMSOrdersRouter);
 
 const start = async () => {
   try {

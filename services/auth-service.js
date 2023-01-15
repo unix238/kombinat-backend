@@ -12,10 +12,11 @@ const MailMessage = (code) => {
   );
 };
 
-const generateAccessToken = (id, role) => {
+const generateAccessToken = (id, role, user) => {
   const payload = {
     id,
     role,
+    user,
   };
   return jsonwebtoken.sign(payload, SECRET, { expiresIn: '24h' });
 };
@@ -117,7 +118,7 @@ class authService {
       if (!validPassword) {
         return res.status(400).json({ message: 'Invalid password' });
       }
-      const token = generateAccessToken(user._id, user.role);
+      const token = generateAccessToken(user._id, user.role, user);
 
       res.status(200).json({ token, user: user._id });
     } catch (e) {

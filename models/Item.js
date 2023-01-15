@@ -6,7 +6,7 @@ const itemSchema = new mongoose.Schema({
   brand: { type: mongoose.Schema.Types.ObjectId, ref: 'Brand' },
   sizes: { type: [String], required: true },
   descriptions: { type: [String], required: true },
-  seller: { type: String, required: true },
+  seller: { type: mongoose.Schema.Types.ObjectId, ref: 'Seller' },
   characteristics: { type: [String], required: true },
   images: { type: [String], required: true },
   tags: { type: [mongoose.Schema.Types.ObjectId], ref: 'Tag' },

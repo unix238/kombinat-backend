@@ -4,10 +4,11 @@ const EmailSender = require('../../utils/sendEmail');
 const bcrypt = require('bcrypt');
 const jsonwebtoken = require('jsonwebtoken');
 
-const generateAccessToken = (id, role) => {
+const generateAccessToken = (id, role, user) => {
   const payload = {
     id,
     role,
+    user,
   };
   return jsonwebtoken.sign(payload, SECRET, { expiresIn: '24h' });
 };
@@ -30,7 +31,7 @@ class AuthService {
         return { status: 400, message: 'Invalid role' };
       }
 
-      const token = generateAccessToken(user._id, user.role);
+      const token = generateAccessToken(user._id, user.role, user);
       return { status: 200, token };
     } catch (e) {
       return res.status(400).json({ error: 'CMS Login error' });

@@ -26,7 +26,7 @@ class ordersController {
       return res.status(200).json(items);
     } catch (e) {
       console.log(e);
-      return res.status(400).json({ error: 'Error in getAllItems' });
+      return res.status(420).json({ error: e });
     }
   }
 }

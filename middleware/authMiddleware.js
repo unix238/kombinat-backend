@@ -16,7 +16,7 @@ const authMiddleware = (req, res, next) => {
     next();
   } catch (e) {
     req.error = e;
-    res.status(400).json({ error: 'authorization error' });
+    res.status(400).json({ error: 'Error in authMiddleware' });
   }
 };
 

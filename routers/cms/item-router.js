@@ -10,5 +10,21 @@ ItemRouter.get(
   [authMiddleware, sellerMiddleware],
   ItemController.getAllItems
 );
+ItemRouter.get(
+  '/brands',
+  [authMiddleware, sellerMiddleware],
+  ItemController.getAllBrands
+);
 
+ItemRouter.get(
+  '/categories',
+  [authMiddleware, sellerMiddleware],
+  ItemController.getAllCategories
+);
+
+ItemRouter.get(
+  '/tags',
+  [authMiddleware, sellerMiddleware],
+  ItemController.getAllTags
+);
 module.exports = ItemRouter;

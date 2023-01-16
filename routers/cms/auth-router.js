@@ -12,4 +12,10 @@ AuthRouter.post(
   authController.addSeller
 );
 
+AuthRouter.post(
+  '/check',
+  [authMiddleware, sellerMiddleware],
+  authController.checkToken
+);
+
 module.exports = AuthRouter;

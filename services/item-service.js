@@ -8,9 +8,10 @@ class ItemService {
     try {
       const totalItems = await Item.find({});
       const items = await Item.find({})
+
         .skip((page - 1) * limit)
         .limit(limit);
-      return { items, totalItems };
+      return { items, totalItems: totalItems.length };
     } catch (e) {
       console.log(e);
       throw e;
@@ -105,6 +106,17 @@ class ItemService {
     }
   }
 
+  async addBrand(brand) {
+    try {
+      const newBrand = await Brand.create(brand);
+      newBrand.save();
+      return newBrand;
+    } catch (e) {
+      console.log(e);
+      throw e;
+    }
+  }
+
   async getItemsByCategory(category, page = 1, limit = 12) {
     try {
       const totalItems = await Item.find({ category: category });
@@ -160,7 +172,7 @@ class ItemService {
               return a.createdAt - b.createdAt;
             }
           });
-          return { items: sortedItems, totalItems };
+          return { items: sortedItems, totalItems: totalItems.length };
         }
         return { items, totalItems };
       }

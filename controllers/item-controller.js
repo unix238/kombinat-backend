@@ -7,13 +7,13 @@ class ItemController {
       const limit = req.query.limit;
       const { items, totalItems } = await ItemService.getItems(page, limit);
       if (items) {
-        res.setHeader('x-total-count', totalItems.length);
+        res.setHeader('x-total-count', totalItems);
         res.setHeader('Access-Control-Expose-Headers', 'x-total-count');
         res.status(200).json(items);
       }
     } catch (e) {
       console.log(e);
-      res.status(400).json({ error: 'get news error' });
+      res.status(400).json({ error: 'get items error' });
     }
   }
 
@@ -144,6 +144,17 @@ class ItemController {
     }
   }
 
+  async addBrand(req, res) {
+    try {
+      const brand = await ItemService.addBrand(req.body);
+      if (brand) {
+        res.status(200).json(brand);
+      }
+    } catch (e) {
+      res.status(400).json(e);
+    }
+  }
+
   async getFilteredItems(req, res) {
     try {
       const { page, limit } = req.query;
@@ -154,7 +165,7 @@ class ItemController {
         limit
       );
       if (items) {
-        res.setHeader('x-total-count', items.length);
+        res.setHeader('x-total-count', totalItems);
         res.setHeader('Access-Control-Expose-Headers', 'x-total-count');
         res.status(200).json(items);
       }

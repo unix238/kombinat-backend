@@ -42,7 +42,7 @@ class AuthController {
     try {
       const user = await User.findOne({ _id: req.user.id });
       if (user) {
-        return res.status(200).json({ message: 'Token is valid' });
+        return res.status(200).json({ user });
       }
       return res.status(400).json({ message: 'Token is not valid' });
     } catch (error) {

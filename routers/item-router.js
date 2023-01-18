@@ -16,7 +16,7 @@ ItemRouter.get('/brands', ItemController.getBrands);
 
 ItemRouter.post(
   '/categories/add',
-  [authMiddleware, adminMiddleware],
+  // [authMiddleware, adminMiddleware],
   ItemController.addCategory
 );
 ItemRouter.post(
@@ -27,9 +27,11 @@ ItemRouter.post(
 
 ItemRouter.post(
   '/tag/add',
-  [authMiddleware, adminMiddleware],
+  // [authMiddleware, adminMiddleware],
   ItemController.addTag
 );
+
+ItemRouter.post('/brands/add', ItemController.addBrand);
 
 ItemRouter.post('/get/filters', ItemController.getFilteredItems);
 

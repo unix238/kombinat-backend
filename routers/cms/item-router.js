@@ -27,4 +27,10 @@ ItemRouter.get(
   [authMiddleware, sellerMiddleware],
   ItemController.getAllTags
 );
+
+ItemRouter.post(
+  '/addItem',
+  [authMiddleware, sellerMiddleware],
+  ItemController.addItem
+);
 module.exports = ItemRouter;

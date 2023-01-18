@@ -50,6 +50,18 @@ class ItemController {
       res.status(500).json({ message: 'Server error' });
     }
   }
+
+  async addItem(req, res) {
+    try {
+      const item = new Item({ ...req.body.item, seller: req.seller._id });
+      await item.save();
+      console.log(req.body);
+      return res.status(200).json({ message: 'Item added' });
+    } catch (e) {
+      console.log(e);
+      res.status(500).json({ message: 'Server error' });
+    }
+  }
 }
 
 module.exports = new ItemController();

@@ -62,6 +62,23 @@ class ItemController {
       res.status(500).json({ message: 'Server error' });
     }
   }
+
+  async updateItem(req, res) {
+    try {
+      const { id } = req.body;
+      const { newitem } = req.body;
+      const item = await Item.findOne({ _id: id });
+      if (!item) {
+        return res.status(400).json({ message: 'Item not found' });
+      }
+      await item.updateOne({ ...newitem });
+      await item.save();
+      return res.status(200).json({ message: 'Item updated' });
+    } catch (e) {
+      console.log(e);
+      res.status(500).json({ message: 'Server error' });
+    }
+  }
 }
 
 module.exports = new ItemController();

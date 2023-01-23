@@ -33,4 +33,10 @@ ItemRouter.post(
   [authMiddleware, sellerMiddleware],
   ItemController.addItem
 );
+
+ItemRouter.post(
+  '/updateItem',
+  [authMiddleware, sellerMiddleware],
+  ItemController.updateItem
+);
 module.exports = ItemRouter;

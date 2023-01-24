@@ -2,6 +2,7 @@ const Item = require('../models/Item');
 const Tag = require('../models/Tag');
 const Category = require('../models/Category');
 const Order = require('../models/Order');
+const SellerOrder = require('../models/SellerOrder');
 
 class PaymentService {
   async addOrder(userID, items) {
@@ -10,6 +11,10 @@ class PaymentService {
         userID,
         items,
       });
+      const items = await Item.find({
+        _id: { $in: items.map((item) => item._id) },
+      });
+      console.log('\n\n\n\n\n\\nitems::::', items);
       return order;
     } catch (e) {
       throw e;

@@ -4,6 +4,7 @@ class PaymentController {
   async addNewOrder(req, res) {
     try {
       const { userID, items } = req.body;
+      console.log(items);
       const order = await PaymentService.addOrder(userID, items);
       if (order) {
         res.status(200).json({ order });

@@ -79,6 +79,21 @@ class ItemController {
       res.status(500).json({ message: 'Server error' });
     }
   }
+
+  async deleteItem(req, res) {
+    try {
+      const { id } = req.params;
+      const item = Item.find({ _id: id });
+      if (!item) {
+        return res.status(400).json({ message: 'Item not found' });
+      }
+      await item.deleteOne();
+      return res.status(200).json({ message: 'Item deleted' });
+    } catch (e) {
+      console.log(e);
+      res.status(500).json({ message: 'Server error' });
+    }
+  }
 }
 
 module.exports = new ItemController();

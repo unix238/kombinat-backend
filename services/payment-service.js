@@ -11,10 +11,8 @@ class PaymentService {
         userID,
         items,
       });
-      const items = await Item.find({
-        _id: { $in: items.map((item) => item._id) },
-      });
-      console.log('\n\n\n\n\n\\nitems::::', items);
+      await order.save();
+      // console.log('\n\n\n\n\n\\nitems::::', items);
       return order;
     } catch (e) {
       throw e;

@@ -39,4 +39,10 @@ ItemRouter.post(
   [authMiddleware, sellerMiddleware],
   ItemController.updateItem
 );
+
+ItemRouter.delete(
+  '/delete/:id',
+  [authMiddleware, sellerMiddleware],
+  ItemController.deleteItem
+);
 module.exports = ItemRouter;

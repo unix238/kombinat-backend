@@ -29,6 +29,16 @@ class ordersController {
       return res.status(420).json({ error: e });
     }
   }
+
+  async getAllOrders(req, res) {
+    try {
+      const orders = await Order.find();
+      return res.status(200).json(orders);
+    } catch (e) {
+      console.log(e);
+      return res.status(420).json({ error: e });
+    }
+  }
 }
 
 module.exports = new ordersController();

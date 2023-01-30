@@ -17,4 +17,10 @@ OrdersRouter.get(
   ordersController.getAllItems
 );
 
+OrdersRouter.get(
+  '/all',
+  [authMiddleware, sellerMiddleware],
+  ordersController.getAllOrders
+);
+
 module.exports = OrdersRouter;

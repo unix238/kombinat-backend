@@ -35,4 +35,6 @@ ItemRouter.post('/brands/add', ItemController.addBrand);
 
 ItemRouter.post('/get/filters', ItemController.getFilteredItems);
 
+ItemRouter.get('/basket-items', ItemController.getBasketItems);
+
 module.exports = ItemRouter;

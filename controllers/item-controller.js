@@ -159,6 +159,7 @@ class ItemController {
     try {
       const { page, limit } = req.query;
       const filters = req.body;
+      console.log(filters);
       const { items, totalItems } = await ItemService.getFilteredItems(
         filters,
         page,
@@ -172,6 +173,20 @@ class ItemController {
     } catch (e) {
       console.log(e);
       res.status(400).json({ error: 'get news error' });
+    }
+  }
+
+  async getBasketItems(req, res) {
+    try {
+      const response = await ItemService.getBasketItems(req.query.items);
+      if (response) {
+        res.status(200).json(response);
+      } else {
+        res.status(404).json({ error: 'basket not found' });
+      }
+    } catch (e) {
+      console.log(e);
+      res.status(400).json({ error: 'getBasketItems error' });
     }
   }
 }

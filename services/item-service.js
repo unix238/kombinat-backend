@@ -143,7 +143,7 @@ class ItemService {
   async getFilteredItems(filters, page = 1, limit = 12) {
     try {
       const { tags, category, brand, sort } = filters;
-      console.log(filters);
+      // console.log(filters);
       const filter = {};
       if (tags.length > 0) {
         filter.tags = tags;
@@ -156,7 +156,6 @@ class ItemService {
       }
 
       if (Object.keys(filter).length === 0) {
-        console.log('dad');
         const totalItems = await Item.find({});
         const items = await Item.find({})
           .skip((page - 1) * limit)
@@ -174,7 +173,7 @@ class ItemService {
           });
           return { items: sortedItems, totalItems: totalItems.length };
         }
-        return { items, totalItems };
+        return { items, totalItems: totalItems.length };
       }
       const totalItems = await Item.find({
         $or: [
@@ -210,14 +209,18 @@ class ItemService {
             return b.price - a.price;
           }
         });
-        console.log(sortedItems);
-        return { items: sortedItems, totalItems };
+        return { items: sortedItems, totalItems: totalItems.length };
       }
-      return { items, totalItems };
+      return { items, totalItems: totalItems.length };
     } catch (e) {
       console.log(e);
       throw e;
     }
+  }
+
+  async getBasketItems(items) {
+    const responseItems = await Item.find({ _id: { $in: items } });
+    return responseItems;
   }
 }
 

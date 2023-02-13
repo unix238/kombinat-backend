@@ -55,12 +55,11 @@ class ItemController {
     try {
       const images = req.files.map((file) => file.path);
       const item = new Item({
-        ...req.body.item,
-        seller: '123123',
+        ...req.body,
+        seller: '63be2ebe2f816203c73b8dfa',
         images: images,
       });
       await item.save();
-      console.log(req.body);
       return res.status(200).json({ message: 'Item added' });
     } catch (e) {
       console.log(e);

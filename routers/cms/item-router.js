@@ -38,12 +38,6 @@ ItemRouter.post(
 );
 
 ItemRouter.post(
-  '/addImage',
-  [authMiddleware, uploadMiddleware.array('image')],
-  ItemController.addImage
-);
-
-ItemRouter.post(
   '/updateItem',
   [authMiddleware, sellerMiddleware],
   ItemController.updateItem

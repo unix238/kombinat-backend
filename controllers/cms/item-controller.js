@@ -53,10 +53,26 @@ class ItemController {
 
   async addItem(req, res) {
     try {
-      const item = new Item({ ...req.body.item, seller: req.seller._id });
+      const images = req.files.map((file) => file.path);
+      const item = new Item({
+        ...req.body.item,
+        seller: '123123',
+        images: images,
+      });
       await item.save();
       console.log(req.body);
       return res.status(200).json({ message: 'Item added' });
+    } catch (e) {
+      console.log(e);
+      res.status(500).json({ message: 'Server error' });
+    }
+  }
+
+  async addImage(req, res) {
+    try {
+      console.log(req.files[0].path);
+      // console.log(req.file.path);
+      res.status(200).json({ message: 'Image added' });
     } catch (e) {
       console.log(e);
       res.status(500).json({ message: 'Server error' });

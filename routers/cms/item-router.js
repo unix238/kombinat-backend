@@ -2,6 +2,9 @@ const Router = require('express');
 const ItemController = require('../../controllers/cms/item-controller');
 const authMiddleware = require('../../middleware/authMiddleware');
 const sellerMiddleware = require('../../middleware/sellerMiddleware');
+const multer = require('multer');
+const path = require('path');
+const uploadMiddleware = require('../../middleware/uploadMiddleware');
 
 const ItemRouter = Router();
 
@@ -30,8 +33,14 @@ ItemRouter.get(
 
 ItemRouter.post(
   '/addItem',
-  [authMiddleware, sellerMiddleware],
+  [authMiddleware, uploadMiddleware.array('image')],
   ItemController.addItem
+);
+
+ItemRouter.post(
+  '/addImage',
+  [authMiddleware, uploadMiddleware.array('image')],
+  ItemController.addImage
 );
 
 ItemRouter.post(

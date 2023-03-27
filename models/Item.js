@@ -12,6 +12,7 @@ const itemSchema = new mongoose.Schema({
   tags: { type: [mongoose.Schema.Types.ObjectId], ref: 'Tag' },
   categories: { type: [mongoose.Schema.Types.ObjectId], ref: 'Category' },
   quantity: { type: Number, required: true, default: 0 },
+  sex: { type: String, required: true },
 });
 
 module.exports = mongoose.model('Item', itemSchema);

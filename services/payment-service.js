@@ -7,13 +7,6 @@ const SellerOrder = require('../models/SellerOrder');
 class PaymentService {
   async addOrder(userID, items) {
     try {
-      const order = await Order.create({
-        userID,
-        items,
-      });
-      await order.save();
-      // console.log('\n\n\n\n\n\\nitems::::', items);
-      return order;
     } catch (e) {
       throw e;
     }
@@ -21,12 +14,6 @@ class PaymentService {
 
   async makePayment(orderID) {
     try {
-      const order = await Order.findById(orderID);
-      if (!order) {
-        throw new Error('Order not found');
-      }
-      order.status = 'paid';
-      order.save();
     } catch (e) {
       throw e;
     }

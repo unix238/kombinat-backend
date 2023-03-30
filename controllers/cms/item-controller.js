@@ -58,12 +58,13 @@ class ItemController {
         ...req.body,
         seller: '63be2ebe2f816203c73b8dfa',
         images: images,
+        sex: 'unisex',
       });
       await item.save();
       return res.status(200).json({ message: 'Item added' });
     } catch (e) {
       console.log(e);
-      res.status(500).json({ message: 'Server error' });
+      res.status(500).json({ message: 'Server error', error: e });
     }
   }
 

@@ -178,7 +178,8 @@ class ItemController {
 
   async getBasketItems(req, res) {
     try {
-      const response = await ItemService.getBasketItems(req.query.items);
+      const items = req.query?.items.map((item) => JSON.parse(item));
+      const response = await ItemService.getBasketItems(items);
       if (response) {
         res.status(200).json(response);
       } else {

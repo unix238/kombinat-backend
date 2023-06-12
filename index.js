@@ -18,11 +18,7 @@ const app = express();
 
 // config
 app.use(cors());
-// setup cors
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  next();
-});
+
 app.use(bodyParser.json({ limit: '50mb', extended: true }));
 app.use(
   bodyParser.urlencoded({

@@ -1,11 +1,11 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 
 const generateActivationLink = () => {
   const chars =
-    'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
   const length = chars.length;
-  let activationLink = '';
+  let activationLink = "";
   for (let i = 0; i < 120; i++) {
     activationLink += chars[Math.floor(Math.random() * length)];
   }
@@ -13,9 +13,9 @@ const generateActivationLink = () => {
 };
 
 const generateActivationCode = () => {
-  const chars = '0123456789';
+  const chars = "0123456789";
   const length = chars.length;
-  let activationCode = '';
+  let activationCode = "";
   for (let i = 0; i < 4; i++) {
     activationCode += chars[Math.floor(Math.random() * length)];
   }
@@ -23,8 +23,8 @@ const generateActivationCode = () => {
 };
 
 const userSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  phone: { type: String, required: true, unique: true },
+  name: { type: String, required: false },
+  phone: { type: String, required: false },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: false },
   newsRecipient: { type: Boolean, default: false },
@@ -32,6 +32,12 @@ const userSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
   isActivated: { type: Boolean, default: false },
   activationCode: { type: String, default: generateActivationCode() },
+  connectionType: { type: String, default: "local" },
+  deliveryData: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "DeliveryData",
+    required: false,
+  },
 });
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model("User", userSchema);

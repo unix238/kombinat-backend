@@ -1,27 +1,29 @@
-const Router = require('express');
-const PaymentController = require('../controllers/payment-controller');
-const authMiddleware = require('../middleware/authMiddleware');
-const adminMiddleware = require('../middleware/adminMiddleware');
+const Router = require("express");
+const PaymentController = require("../controllers/payment-controller");
+const authMiddleware = require("../middleware/authMiddleware");
+const adminMiddleware = require("../middleware/adminMiddleware");
 
 const PaymentRouter = Router();
 
 PaymentRouter.post(
-  '/new-order',
+  "/new-order",
   [authMiddleware],
   PaymentController.addNewOrder
 );
 
 PaymentRouter.post(
-  '/make-payment',
+  "/make-payment",
   [authMiddleware],
   PaymentController.makePayment
 );
 
 PaymentRouter.get(
-  '/all-payments',
+  "/all-payments",
   [authMiddleware],
   [adminMiddleware],
   PaymentController.getAllPayments
 );
+
+PaymentRouter.get("/sign", PaymentController.generateSignature);
 
 module.exports = PaymentRouter;

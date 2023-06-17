@@ -1,4 +1,4 @@
-const PaymentService = require('../services/payment-service');
+const PaymentService = require("../services/payment-service");
 
 class PaymentController {
   async addNewOrder(req, res) {
@@ -27,6 +27,15 @@ class PaymentController {
     try {
       const payments = await PaymentService.getAllPayments();
       if (payments) res.status(200).json({ payments });
+    } catch (e) {
+      res.status(400).json({ error: e.message });
+    }
+  }
+
+  async generateSignature(req, res) {
+    try {
+      const signature = await PaymentService.getSignature();
+      if (signature) res.status(200);
     } catch (e) {
       res.status(400).json({ error: e.message });
     }

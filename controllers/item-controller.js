@@ -1,4 +1,4 @@
-const ItemService = require('../services/item-service');
+const ItemService = require("../services/item-service");
 
 class ItemController {
   async getItems(req, res) {
@@ -7,13 +7,13 @@ class ItemController {
       const limit = req.query.limit;
       const { items, totalItems } = await ItemService.getItems(page, limit);
       if (items) {
-        res.setHeader('x-total-count', totalItems);
-        res.setHeader('Access-Control-Expose-Headers', 'x-total-count');
+        res.setHeader("x-total-count", totalItems);
+        res.setHeader("Access-Control-Expose-Headers", "x-total-count");
         res.status(200).json(items);
       }
     } catch (e) {
       console.log(e);
-      res.status(400).json({ error: 'get items error' });
+      res.status(400).json({ error: "get items error" });
     }
   }
 
@@ -26,7 +26,7 @@ class ItemController {
       }
     } catch (e) {
       console.log(e);
-      res.status(400).json({ error: 'get news error' });
+      res.status(400).json({ error: "get news error" });
     }
   }
 
@@ -61,7 +61,7 @@ class ItemController {
       if (tag) {
         res.status(200).json(tag);
       } else {
-        res.status(404).json({ error: 'tag not found' });
+        res.status(404).json({ error: "tag not found" });
       }
     } catch (e) {
       console.log(e);
@@ -86,7 +86,7 @@ class ItemController {
       console.log(req);
     } catch (e) {
       console.log(e);
-      res.status(400).json({ error: 'get news error' });
+      res.status(400).json({ error: "get news error" });
     }
   }
 
@@ -123,13 +123,13 @@ class ItemController {
         limit
       );
       if (items) {
-        res.setHeader('x-total-count', totalItems.length);
-        res.setHeader('Access-Control-Expose-Headers', 'x-total-count');
+        res.setHeader("x-total-count", totalItems.length);
+        res.setHeader("Access-Control-Expose-Headers", "x-total-count");
         res.status(200).json(items);
       }
     } catch (e) {
       console.log(e);
-      res.status(400).json({ error: 'get news error' });
+      res.status(400).json({ error: "get news error" });
     }
   }
 
@@ -166,13 +166,13 @@ class ItemController {
         limit
       );
       if (items) {
-        res.setHeader('x-total-count', totalItems);
-        res.setHeader('Access-Control-Expose-Headers', 'x-total-count');
+        res.setHeader("x-total-count", totalItems);
+        res.setHeader("Access-Control-Expose-Headers", "x-total-count");
         res.status(200).json(items);
       }
     } catch (e) {
       console.log(e);
-      res.status(400).json({ error: 'get news error' });
+      res.status(400).json({ error: "get news error" });
     }
   }
 
@@ -183,11 +183,13 @@ class ItemController {
       if (response) {
         res.status(200).json(response);
       } else {
-        res.status(404).json({ error: 'basket not found' });
+        res.status(404).json({ error: "basket not found" });
       }
     } catch (e) {
       console.log(e);
-      res.status(400).json({ error: 'getBasketItems error' });
+      res
+        .status(400)
+        .json({ error: "getBasketItems error", e: e, em: e.message });
     }
   }
 }

@@ -1,7 +1,7 @@
-const Item = require('../models/Item');
-const Tag = require('../models/Tag');
-const Brand = require('../models/Brand');
-const Category = require('../models/Category');
+const Item = require("../models/Item");
+const Tag = require("../models/Tag");
+const Brand = require("../models/Brand");
+const Category = require("../models/Category");
 
 class ItemService {
   async getItems(page = 1, limit = 10) {
@@ -163,11 +163,11 @@ class ItemService {
 
         if (sort.length > 0) {
           const sortedItems = items.sort((a, b) => {
-            if (sort === 'asc') {
+            if (sort === "asc") {
               return a.price - b.price;
-            } else if (sort === 'desc') {
+            } else if (sort === "desc") {
               return b.price - a.price;
-            } else if (sort === 'date') {
+            } else if (sort === "date") {
               return a.createdAt - b.createdAt;
             }
           });
@@ -203,9 +203,9 @@ class ItemService {
       if (sort.length > 0) {
         // console.log(items, 'sort');
         const sortedItems = items.sort((a, b) => {
-          if (sort === 'asc') {
+          if (sort === "asc") {
             return a.price - b.price;
-          } else if (sort === 'desc') {
+          } else if (sort === "desc") {
             return b.price - a.price;
           }
         });

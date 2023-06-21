@@ -24,6 +24,8 @@ PaymentRouter.get(
   PaymentController.getAllPayments
 );
 
+PaymentRouter.get("/result", PaymentController.getResult);
+
 PaymentRouter.get("/sign", PaymentController.generateSignature);
 
 module.exports = PaymentRouter;

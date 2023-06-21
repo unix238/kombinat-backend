@@ -3,13 +3,24 @@ const PaymentService = require("../services/payment-service");
 class PaymentController {
   async addNewOrder(req, res) {
     try {
-      const { userID, items } = req.body;
-      console.log(items);
-      const order = await PaymentService.addOrder(userID, items);
-      if (order) {
-        res.status(200).json({ order });
-      }
+      const { items, deliveryData } = req.body;
+      const response = await PaymentService.addNewOrder(items, deliveryData);
+      // console.log(items);
+      return res.status(200).json(response);
     } catch (e) {
+      console.log(e);
+      res.status(400).json({ error: e });
+    }
+  }
+
+  async getResult(req, res) {
+    try {
+      console.log(req);
+      // const { orderID } = req.query;
+      // const result = await PaymentService.getResult(orderID);
+      return res.status(200).json(result);
+    } catch (e) {
+      console.log(e);
       res.status(400).json({ error: e });
     }
   }

@@ -199,6 +199,7 @@ class PaymentService {
       pg_amount: amount,
       pg_description: description,
       pg_salt: salt,
+      pg_result_url: "https://dev.kmbinat.com/payments/result",
     };
 
     function makeFlatParamsArray(arrParams, parent_name = "") {

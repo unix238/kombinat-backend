@@ -19,16 +19,19 @@ class PaymentService {
         allItems.reduce((acc, item) => {
           return acc + item.price;
         }, 0) + 1000;
-
+      console.log("ITEMS: ", items);
       const order = new Order({
-        items: items.map((item) => ({ item: item.id, size: item.size })),
+        items: items.map((item) => ({
+          item: { item: item.id },
+          size: item.size,
+        })),
         deliveryData,
         totalPrice,
         amount: totalPrice,
         salt: salt,
         user: userID,
       });
-      console.log(totalPrice);
+      console.log(order.items);
       // amount, id, salt, description
       const signature = await this.getSignature(
         totalPrice,
@@ -290,7 +293,21 @@ class PaymentService {
   async getOrders(userID) {
     try {
       const orders = await Order.find({ user: userID, status: "paid" });
-      return orders;
+
+      const result = await Promise.all(
+        orders.map(async (order) => {
+          const items = await order.items.map(async (item) => {
+            console.log(item.item.item);
+            return {
+              item: await Item.findById(item.item.item),
+              size: item.size,
+            };
+          });
+          return { ...order._doc, items: await Promise.all(items) };
+        })
+      );
+
+      return await result;
     } catch (e) {
       throw e;
     }

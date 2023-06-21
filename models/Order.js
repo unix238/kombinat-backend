@@ -5,7 +5,11 @@ const orderSchema = new mongoose.Schema({
     type: [
       {
         item: {
-          item: mongoose.Schema.Types.ObjectId,
+          item: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Item",
+            required: true,
+          },
           quantity: Number,
           size: String,
         },

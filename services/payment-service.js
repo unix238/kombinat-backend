@@ -260,7 +260,7 @@ class PaymentService {
         pg_card_pan,
         pg_card_owner,
         pg_result,
-      } = req.body;
+      } = data;
       const order = Order.findById(pg_order_id);
       if (!order) {
         return "Order not found";

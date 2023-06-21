@@ -28,6 +28,10 @@ const orderSchema = new mongoose.Schema({
   salt: { type: String, required: true },
   amount: { type: Number, required: true },
   status: { type: String, default: "pending" },
+  paymentID: { type: String, required: false },
+  paymentDate: { type: Date, required: false },
+  paymentCardPan: { type: String, required: false },
+  paymentCardOwner: { type: String, required: false },
   createdAt: { type: Date, default: Date.now },
 });
 

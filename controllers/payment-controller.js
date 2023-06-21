@@ -16,9 +16,11 @@ class PaymentController {
   async getResult(req, res) {
     try {
       console.log(req);
-      // const { orderID } = req.query;
-      // const result = await PaymentService.getResult(orderID);
-      return res.status(200).json(result);
+      const data = req.data;
+      const result = await PaymentService.getResult(data);
+      if (result) {
+        return res.status(200);
+      }
     } catch (e) {
       console.log(e);
       res.status(400).json({ error: e });

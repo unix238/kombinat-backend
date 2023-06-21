@@ -250,6 +250,40 @@ class PaymentService {
     const signature = CryptoJS.MD5(values.join(";")).toString();
     return signature;
   }
+
+  async getResult(data) {
+    try {
+      const {
+        pg_order_id,
+        pg_payment_id,
+        pg_payment_date,
+        pg_card_pan,
+        pg_card_owner,
+        pg_result,
+      } = req.body;
+      const order = Order.findById(pg_order_id);
+      if (!order) {
+        return "Order not found";
+      }
+      if (order.status === "paid") {
+        return "Order already paid";
+      }
+      if (pg_result === 1) {
+        order.status = "paid";
+        order.payment_id = pg_payment_id;
+        order.payment_date = pg_payment_date;
+        order.card_pan = pg_card_pan;
+        order.card_owner = pg_card_owner;
+        await order.save();
+        return "Payment success";
+      } else {
+        return "Payment failed";
+      }
+    } catch (e) {
+      console.log(e);
+      return e;
+    }
+  }
 }
 // init_payment.php;25;test;548817;23;some random string;lU9HFGGboiFuEZvM
 module.exports = new PaymentService();

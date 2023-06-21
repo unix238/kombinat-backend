@@ -105,6 +105,9 @@ class PaymentService {
       pg_salt: data.salt,
       pg_sig: data.signature,
       pg_result_url: "https://dev.kmbinat.com/payments/result",
+      pg_check_url: "https://dev.kmbinat.com/payments/result",
+      pg_result_url: "https://dev.kmbinat.com/payments/result",
+      pg_site_url: "https://dev.kmbinat.com/payments/result",
     };
     return await axios.post(
       "https://api.paybox.money/init_payment.php",
@@ -200,6 +203,9 @@ class PaymentService {
       pg_description: description,
       pg_salt: salt,
       pg_result_url: "https://dev.kmbinat.com/payments/result",
+      pg_check_url: "https://dev.kmbinat.com/payments/result",
+      pg_result_url: "https://dev.kmbinat.com/payments/result",
+      pg_site_url: "https://dev.kmbinat.com/payments/result",
     };
 
     function makeFlatParamsArray(arrParams, parent_name = "") {

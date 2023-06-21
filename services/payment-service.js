@@ -191,6 +191,8 @@ class PaymentService {
     const paybox_merchant_id = config.MERCHANT_IDENTIFIER;
     const paybox_merchant_secret = config.PAYMENT_RECEPTION;
 
+    console.log(`data: ${amount}, ${id}, ${salt}, ${description}`);
+
     const request = {
       pg_order_id: id,
       pg_merchant_id: paybox_merchant_id,
@@ -237,7 +239,7 @@ class PaymentService {
     const values = Object.values(sortedData);
     values.push(paybox_merchant_secret);
     values.unshift("init_payment.php");
-
+    console.log(`values: ${values}`);
     const signature = CryptoJS.MD5(values.join(";")).toString();
     return signature;
   }

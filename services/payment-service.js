@@ -261,7 +261,7 @@ class PaymentService {
         pg_card_owner,
         pg_result,
       } = data;
-      const order = Order.findById(pg_order_id);
+      const order = await Order.findById(pg_order_id);
       if (!order) {
         console.log("Order not found");
         return "Order not found";

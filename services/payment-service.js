@@ -9,7 +9,7 @@ const config = require("../config");
 const { DOMParser } = require("xmldom");
 
 class PaymentService {
-  async addNewOrder(items, deliveryData) {
+  async addNewOrder(items, deliveryData, userID) {
     try {
       const salt = Math.random().toString();
       const allItems = await Item.find({
@@ -26,6 +26,7 @@ class PaymentService {
         totalPrice,
         amount: totalPrice,
         salt: salt,
+        user: userID,
       });
       console.log(totalPrice);
       // amount, id, salt, description
@@ -284,6 +285,14 @@ class PaymentService {
     } catch (e) {
       console.log(e);
       return e;
+    }
+  }
+  async getOrders(userID) {
+    try {
+      const orders = await Order.find({ user: userID, status: "paid" });
+      return orders;
+    } catch (e) {
+      throw e;
     }
   }
 }

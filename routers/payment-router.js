@@ -25,6 +25,7 @@ PaymentRouter.get(
 );
 
 PaymentRouter.get("/result", PaymentController.getResult);
+PaymentRouter.get("/get-orders", [authMiddleware], PaymentController.getOrders);
 PaymentRouter.post("/result", PaymentController.getResult);
 
 PaymentRouter.get("/sign", PaymentController.generateSignature);

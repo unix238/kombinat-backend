@@ -4,7 +4,11 @@ class PaymentController {
   async addNewOrder(req, res) {
     try {
       const { items, deliveryData } = req.body;
-      const response = await PaymentService.addNewOrder(items, deliveryData);
+      const response = await PaymentService.addNewOrder(
+        items,
+        deliveryData,
+        req.user.id
+      );
       // console.log(items);
       return res.status(200).json(response);
     } catch (e) {
@@ -48,6 +52,16 @@ class PaymentController {
     try {
       const signature = await PaymentService.getSignature();
       if (signature) res.status(200);
+    } catch (e) {
+      res.status(400).json({ error: e.message });
+    }
+  }
+
+  async getOrders(req, res) {
+    try {
+      const orders = await PaymentService.getOrders(req.user.id);
+      console.log(orders);
+      if (orders) res.status(200).json({ orders });
     } catch (e) {
       res.status(400).json({ error: e.message });
     }

@@ -33,6 +33,7 @@ const orderSchema = new mongoose.Schema({
   paymentCardPan: { type: String, required: false },
   paymentCardOwner: { type: String, required: false },
   createdAt: { type: Date, default: Date.now },
+  user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
 });
 
 module.exports = mongoose.model("Order", orderSchema);

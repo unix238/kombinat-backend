@@ -263,12 +263,14 @@ class PaymentService {
       } = data;
       const order = Order.findById(pg_order_id);
       if (!order) {
+        console.log("Order not found");
         return "Order not found";
       }
       if (order.status === "paid") {
+        console.log("Order already paid");
         return "Order already paid";
       }
-      if (pg_result === 1) {
+      if (pg_result == 1) {
         order.status = "paid";
         order.payment_id = pg_payment_id;
         order.payment_date = pg_payment_date;

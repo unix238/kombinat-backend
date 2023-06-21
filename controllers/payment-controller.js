@@ -15,9 +15,8 @@ class PaymentController {
 
   async getResult(req, res) {
     try {
-      console.log(req);
-      const data = req.data;
-      const result = await PaymentService.getResult(data);
+      console.log(req.body);
+      const result = await PaymentService.getResult(req.body);
       if (result) {
         return res.status(200);
       }

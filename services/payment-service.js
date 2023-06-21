@@ -272,10 +272,10 @@ class PaymentService {
       }
       if (pg_result == 1) {
         order.status = "paid";
-        order.payment_id = pg_payment_id;
-        order.payment_date = pg_payment_date;
-        order.card_pan = pg_card_pan;
-        order.card_owner = pg_card_owner;
+        order.paymentID = pg_payment_id;
+        order.paymentDate = pg_payment_date;
+        order.paymentCardPan = pg_card_pan;
+        order.paymentCardOwner = pg_card_owner;
         await order.save();
         return "Payment success";
       } else {

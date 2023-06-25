@@ -1,4 +1,5 @@
-const mongoose = require("mongoose");
+// const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const deliveryData = new mongoose.Schema({
   country: { type: String, required: true },
@@ -8,4 +9,5 @@ const deliveryData = new mongoose.Schema({
   phone: { type: String, required: true },
 });
 
-module.exports = mongoose.model("DeliveryData", deliveryData);
+// module.exports = mongoose.model("DeliveryData", deliveryData);
+export default mongoose.model("DeliveryData", deliveryData);

@@ -1,4 +1,5 @@
-const NewsService = require('../services/news-service');
+// const NewsService = require('../services/news-service');
+import NewsService from "../services/news-service.js";
 
 class NewsController {
   async getNews(req, res) {
@@ -11,7 +12,7 @@ class NewsController {
       }
     } catch (e) {
       console.log(e);
-      res.status(400).json({ error: 'get news error' });
+      res.status(400).json({ error: "get news error" });
     }
   }
 
@@ -24,7 +25,7 @@ class NewsController {
       }
     } catch (e) {
       console.log(e);
-      res.status(400).json({ error: 'get news error' });
+      res.status(400).json({ error: "get news error" });
     }
   }
 
@@ -41,4 +42,5 @@ class NewsController {
   }
 }
 
-module.exports = new NewsController();
+// module.exports = new NewsController();
+export default new NewsController();

@@ -1,4 +1,5 @@
-const ItemService = require("../services/item-service");
+// const ItemService = require("../services/item-service");
+import ItemService from "../services/item-service.js";
 
 class ItemController {
   async getItems(req, res) {
@@ -195,4 +196,5 @@ class ItemController {
   }
 }
 
-module.exports = new ItemController();
+// module.exports = new ItemController();
+export default new ItemController();

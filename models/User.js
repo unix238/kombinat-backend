@@ -1,5 +1,8 @@
-const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
+// const mongoose = require("mongoose");
+// const bcrypt = require("bcrypt");
+
+import mongoose from "mongoose";
+import bcrypt from "bcrypt";
 
 const generateActivationLink = () => {
   const chars =
@@ -40,4 +43,5 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("User", userSchema);
+// module.exports = mongoose.model("User", userSchema);
+export default mongoose.model("User", userSchema);

@@ -1,16 +1,17 @@
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
+import mongoose from "mongoose";
 
 const sellerOrderScheme = new mongoose.Schema({
   sellerId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Seller',
+    ref: "Seller",
     required: true,
   },
   items: [
     {
       productId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Product',
+        ref: "Product",
         required: true,
       },
       quantity: {
@@ -49,4 +50,5 @@ const sellerOrderScheme = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model('SellerOrder', sellerOrderScheme);
+// module.exports = mongoose.model('SellerOrder', sellerOrderScheme);
+export default mongoose.model("SellerOrder", sellerOrderScheme);

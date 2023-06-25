@@ -1,4 +1,5 @@
-const News = require('../models/News');
+// const News = require('../models/News');
+import News from "../models/News.js";
 
 class NewsService {
   async getNews(page = 1, limit = 10) {
@@ -36,4 +37,5 @@ class NewsService {
   }
 }
 
-module.exports = new NewsService();
+// module.exports = new NewsService();
+export default new NewsService();

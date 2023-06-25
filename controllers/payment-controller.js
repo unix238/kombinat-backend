@@ -1,4 +1,5 @@
-const PaymentService = require("../services/payment-service");
+// const PaymentService = require("../services/payment-service");
+import PaymentService from "../services/payment-service.js";
 
 class PaymentController {
   async addNewOrder(req, res) {
@@ -68,4 +69,5 @@ class PaymentController {
   }
 }
 
-module.exports = new PaymentController();
+// module.exports = new PaymentController();
+export default new PaymentController();

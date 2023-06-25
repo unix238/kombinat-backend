@@ -1,50 +1,50 @@
-const Router = require('express');
-const ItemController = require('../../controllers/cms/item-controller');
-const authMiddleware = require('../../middleware/authMiddleware');
-const sellerMiddleware = require('../../middleware/sellerMiddleware');
-const multer = require('multer');
-const path = require('path');
-const uploadMiddleware = require('../../middleware/uploadMiddleware');
+const Router = require("express");
+const ItemController = require("../../controllers/cms/item-controller");
+const authMiddleware = require("../../middleware/authMiddleware");
+const sellerMiddleware = require("../../middleware/sellerMiddleware");
+const multer = require("multer");
+const path = require("path");
+const uploadMiddleware = require("../../middleware/uploadMiddleware");
 
 const ItemRouter = Router();
 
 ItemRouter.get(
-  '/all',
+  "/all",
   [authMiddleware, sellerMiddleware],
   ItemController.getAllItems
 );
 ItemRouter.get(
-  '/brands',
+  "/brands",
   [authMiddleware, sellerMiddleware],
   ItemController.getAllBrands
 );
 
 ItemRouter.get(
-  '/categories',
+  "/categories",
   [authMiddleware, sellerMiddleware],
   ItemController.getAllCategories
 );
 
 ItemRouter.get(
-  '/tags',
+  "/tags",
   [authMiddleware, sellerMiddleware],
   ItemController.getAllTags
 );
 
 ItemRouter.post(
-  '/addItem',
-  [authMiddleware, uploadMiddleware.array('image')],
+  "/addItem",
+  [authMiddleware, uploadMiddleware.array("image")],
   ItemController.addItem
 );
 
 ItemRouter.post(
-  '/updateItem',
+  "/updateItem",
   [authMiddleware, sellerMiddleware],
   ItemController.updateItem
 );
 
 ItemRouter.delete(
-  '/delete/:id',
+  "/delete/:id",
   [authMiddleware, sellerMiddleware],
   ItemController.deleteItem
 );

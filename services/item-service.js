@@ -1,7 +1,13 @@
-const Item = require("../models/Item");
-const Tag = require("../models/Tag");
-const Brand = require("../models/Brand");
-const Category = require("../models/Category");
+// const Item = require("../models/Item");
+// const Tag = require("../models/Tag");
+// const Brand = require("../models/Brand");
+// const Category = require("../models/Category");
+
+import Item from "../models/Item.js";
+import Tag from "../models/Tag.js";
+import Brand from "../models/Brand.js";
+import Category from "../models/Category.js";
+import Seller from "../models/Seller.js";
 
 class ItemService {
   async getItems(page = 1, limit = 10) {
@@ -20,8 +26,23 @@ class ItemService {
 
   async getByID(id) {
     try {
-      const items = await Item.findById(id);
-      return items;
+      const item = await Item.findById(id);
+
+      const tags = await Tag.find({ _id: { $in: item.tags } });
+      const brand = await Brand.findById(item.brand);
+      const category = await Category.findById(item.category);
+      const seller = await Seller.findById(item.seller);
+
+      // Create an object that includes all the data
+      const itemWithData = {
+        ...item._doc,
+        tags,
+        brand,
+        category,
+        seller,
+      };
+
+      return itemWithData;
     } catch (e) {
       console.log(e);
       throw e;
@@ -142,7 +163,7 @@ class ItemService {
 
   async getFilteredItems(filters, page = 1, limit = 12) {
     try {
-      const { tags, category, brand, sort } = filters;
+      const { tags, category, brand, sort, seller } = filters;
       // console.log(filters);
       const filter = {};
       if (tags.length > 0) {
@@ -154,7 +175,9 @@ class ItemService {
       if (brand.length > 0) {
         filter.brand = brand;
       }
-
+      if (seller.length > 0) {
+        filter.seller = seller;
+      }
       if (Object.keys(filter).length === 0) {
         const totalItems = await Item.find({});
         const items = await Item.find({})
@@ -182,6 +205,7 @@ class ItemService {
               { tags: { $in: tags } },
               { categories: { $in: category } },
               { brand: { $in: brand } },
+              { seller: { $in: seller } },
             ],
           },
         ],
@@ -193,6 +217,7 @@ class ItemService {
               { tags: { $in: tags } },
               { categories: { $in: category } },
               { brand: { $in: brand } },
+              { seller: { $in: seller } },
             ],
           },
         ],
@@ -224,4 +249,5 @@ class ItemService {
   }
 }
 
-module.exports = new ItemService();
+// module.exports = new ItemService();
+export default new ItemService();

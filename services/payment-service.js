@@ -1,12 +1,22 @@
-const Item = require("../models/Item");
-const Tag = require("../models/Tag");
-const Category = require("../models/Category");
-const Order = require("../models/Order");
-const SellerOrder = require("../models/SellerOrder");
-const axios = require("axios");
-const CryptoJS = require("crypto-js");
-const config = require("../config");
-const { DOMParser } = require("xmldom");
+// const Item = require("../models/Item");
+// const Tag = require("../models/Tag");
+// const Category = require("../models/Category");
+// const Order = require("../models/Order");
+// const SellerOrder = require("../models/SellerOrder");
+// const axios = require("axios");
+// const CryptoJS = require("crypto-js");
+// const config = require("../config");
+// const { DOMParser } = require("xmldom");
+
+import Item from "../models/Item.js";
+import Tag from "../models/Tag.js";
+import Category from "../models/Category.js";
+import Order from "../models/Order.js";
+import SellerOrder from "../models/SellerOrder.js";
+import axios from "axios";
+import CryptoJS from "crypto-js";
+import config from "../config/index.js";
+import { DOMParser } from "xmldom";
 
 class PaymentService {
   async addNewOrder(items, deliveryData, userID) {
@@ -314,4 +324,6 @@ class PaymentService {
   }
 }
 // init_payment.php;25;test;548817;23;some random string;lU9HFGGboiFuEZvM
-module.exports = new PaymentService();
+// module.exports = new PaymentService();
+
+export default new PaymentService();

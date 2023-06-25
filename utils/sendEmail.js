@@ -1,17 +1,18 @@
-const nodemailer = require('nodemailer');
+// const nodemailer = require('nodemailer');
+import nodemailer from "nodemailer";
 
 class EmailSender {
   static async sendEmail(to, subject, text) {
     let mailTransporter = nodemailer.createTransport({
-      service: 'gmail',
+      service: "gmail",
       auth: {
-        user: 'testsendingactivationcode@gmail.com',
-        pass: 'endybqxlamybvqih',
+        user: "testsendingactivationcode@gmail.com",
+        pass: "endybqxlamybvqih",
       },
     });
 
     let mailDetails = {
-      from: 'kmbnnt@gmail.com',
+      from: "kmbnnt@gmail.com",
       to: to,
       subject: subject,
       text: text,
@@ -19,12 +20,13 @@ class EmailSender {
 
     mailTransporter.sendMail(mailDetails, function (err, data) {
       if (err) {
-        console.log('Error Occurs');
+        console.log("Error Occurs");
       } else {
-        console.log('Email sent successfully');
+        console.log("Email sent successfully");
       }
     });
   }
 }
 
-module.exports = EmailSender;
+// module.exports = EmailSender;
+export default EmailSender;

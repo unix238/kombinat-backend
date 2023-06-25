@@ -1,7 +1,12 @@
-const Router = require("express");
-const authController = require("../controllers/auth-controller");
-const authMiddleware = require("../middleware/authMiddleware");
-const adminMiddleware = require("../middleware/adminMiddleware");
+// const Router = require("express");
+// const authController = require("../controllers/auth-controller");
+// const authMiddleware = require("../middleware/authMiddleware");
+// const adminMiddleware = require("../middleware/adminMiddleware");
+
+import { Router } from "express";
+import authController from "../controllers/auth-controller.js";
+import authMiddleware from "../middleware/authMiddleware.js";
+import adminMiddleware from "../middleware/adminMiddleware.js";
 
 const AuthRouter = Router();
 
@@ -26,4 +31,5 @@ AuthRouter.get(
   authController.getUserByID
 );
 
-module.exports = AuthRouter;
+// module.exports = AuthRouter;
+export default AuthRouter;

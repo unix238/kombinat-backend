@@ -1,23 +1,25 @@
-const User = require('../models/User');
+// const User = require("../models/User");
+import User from "../models/User.js";
 
 const adminMiddleware = async (req, res, next) => {
-  if (req.method === 'OPTIONS') {
+  if (req.method === "OPTIONS") {
     next();
   }
 
   try {
     const current = await User.findById(req.user.id);
     if (!current) {
-      throw new Error('No user');
+      throw new Error("No user");
     }
-    if (current.role !== 'ADMIN') {
-      throw new Error('No user');
+    if (current.role !== "ADMIN") {
+      throw new Error("No user");
     }
     next();
   } catch (e) {
     req.error = e;
-    res.status(400).json({ error: 'authorization error no admin' });
+    res.status(400).json({ error: "authorization error no admin" });
   }
 };
 
-module.exports = adminMiddleware;
+// module.exports = adminMiddleware;
+export default adminMiddleware;

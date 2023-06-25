@@ -1,10 +1,18 @@
-const User = require("../models/User");
-const bcrypt = require("bcrypt");
-const jsonwebtoken = require("jsonwebtoken");
-const { SECRET } = require("../config");
-const EmailSender = require("../utils/sendEmail");
-const axios = require("axios");
-const DeliveryData = require("../models/DeliveryData");
+// const User = require("../models/User");
+// const bcrypt = require("bcrypt");
+// const jsonwebtoken = require("jsonwebtoken");
+// const { SECRET } = require("../config");
+// const EmailSender = require("../utils/sendEmail");
+// const axios = require("axios");
+// const DeliveryData = require("../models/DeliveryData");
+
+import User from "../models/User.js";
+import bcrypt from "bcrypt";
+import jsonwebtoken from "jsonwebtoken";
+import { SECRET } from "../config/index.js";
+import EmailSender from "../utils/sendEmail.js";
+import axios from "axios";
+import DeliveryData from "../models/DeliveryData.js";
 
 const MailMessage = (code) => {
   return (
@@ -262,4 +270,5 @@ class authService {
   }
 }
 
-module.exports = new authService();
+// module.exports = new authService();
+export default new authService();

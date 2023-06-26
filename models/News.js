@@ -8,6 +8,11 @@ const newsSchema = new mongoose.Schema({
   secondSubTitle: { type: String },
   link: { type: String, required: true },
   isImageLeft: { type: Boolean, required: true },
+  seller: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Seller",
+    required: false,
+  },
   createdAt: { type: Date, default: Date.now },
 });
 
